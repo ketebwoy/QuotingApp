@@ -1,0 +1,342 @@
+﻿@model InsuranceAgencyQuotingSystem.Models.CreateQuoteModel
+
+
+@{
+    ViewBag.Title = "CreateDrivers";
+}
+
+<h2>Create Drivers</h2>
+
+
+
+@section Sidebar {
+    <p> This sidebar has "Create Quote Page" specific content</p>
+    <center>
+        <table>
+            <tr>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Page
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    @if (Model.Quote.ApplicantPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Applicant Information Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.ApplicantQuoteInfoPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Policy Information Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.DriverPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Driver Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.VehiclePageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Vehicle Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.CoveragePageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Coverage Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.RatePageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Rate Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.BuyPolicyPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Buy Policy Page</a>
+                </td>
+            </tr>
+        </table>
+    </center>
+
+}
+
+<div class="has-error form-group">
+    <!-- 'has-error' class has been added on parent form-group div -->
+    @using (Html.BeginForm("CreateDrivers", "Quote", FormMethod.Post, new { @class = "form-horizontal", @id = "myform" }))
+    {
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="coapplicant" class="control-label col-xs-2">Co-Applicant?</label>
+                <div class="col-xs-3">
+                    <div class="radio-inline">
+                        @Html.RadioButtonFor(m => m.Driver.CoApplicantFlag, "true") Yes
+                    </div>
+                    <div class="radio-inline">
+                        @Html.RadioButtonFor(m => m.Driver.CoApplicantFlag, "false") No
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nameSection" class="control-label col-xs-2">Full Name</label>
+                <div class="col-xs-2">
+                    <label for="FirstName">First Name</label>
+                 @Html.TextBoxFor(m => m.Driver.FirstName, null, new { @class = "form-control", data_val_required = "First Name Field is required." })
+                    <div class="text-danger field-validation-error" data-valmsg-for="Driver.FirstName"
+                         data-valmsg-replace="true">First Name Field is required.</div>
+                </div>
+                <div class="col-xs-1">
+                    <label for="MI">M.I.</label>
+                    @Html.TextBoxFor(m => m.Driver.MiddleInit, null, new { @class = "form-control" })
+                    
+                </div>
+                <div class="col-xs-3">
+                    <label for="LastName">Last Name</label>
+                    @Html.TextBoxFor(m => m.Driver.LastName, null, new { @class = "form-control", data_val_required = "Last Name Field is required." })
+                    <div class="text-danger field-validation-error" data-valmsg-for="Driver.LastName"
+                         data-valmsg-replace="true">Last Name Field is required.</div>
+                </div>
+               
+            </div>
+            <div class="form-group">
+                <label for="DOB" class="control-label col-xs-2">Date of Birth</label>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.Driver.DateOfBirth, null, new { @class = "form-control", data_val_required = "DOB Field is required.", type = "date" })
+                    <div class="text-danger field-validation-error" data-valmsg-for="Driver.DateOfBirth"
+                         data-valmsg-replace="true">Date of Birth is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Gender" class="control-label col-xs-2">Gender</label>
+                <div class="col-xs-3">
+                    <div class="radio-inline">
+                        @Html.RadioButtonFor(m => m.Driver.Gender, "true") Male
+                    </div>
+                    <div class="radio-inline">
+                        @Html.RadioButtonFor(m => m.Driver.Gender, "false") Female
+                    </div>
+                   
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="afl" class="control-label col-xs-2">Age First Licensced</label>
+                <div class="col-xs-1">
+                    @Html.TextBoxFor(m => m.Driver.AgeFirstLicensed, null, new { @class = "form-control", data_val_required = "License Age Field is required.", type = "number" })
+                    <div class="text-danger field-validation-error" data-valmsg-for="Driver.AgeFirstLicensed"
+                         data-valmsg-replace="true">License Age Field is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="afl" class="control-label col-xs-2">Drivers License </label>
+                <div class="col-xs-3">
+                    <label for="dlnum">License Nummber</label>
+                    @Html.TextBoxFor(m => m.Driver.DriversLicenseNumber, null, new { @class = "form-control", data_val_required = "License Field is required." })
+                    <div class="text-danger field-validation-error" data-valmsg-for="Driver.DriversLicenseNumber"
+                         data-valmsg-replace="true">License Field is required.</div>
+                </div>
+
+                <div class="col-xs-2">
+                    <label for="State">License issue State</label>
+                    <select class="form-control" data-val="true"
+                            data-val-required="The State field is required."
+                            id="Driver.State" name="Driver.State"></select>
+                    <div class="text-danger field-validation-error" data-valmsg-for="Quote.State"
+                         data-valmsg-replace="true">The State field is required.</div>
+                    
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="afl" class="control-label col-xs-2">Occupation</label>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.Driver.Occupation, null, new { @class = "form-control", data_val_required = "Occupation Field is required." })
+                    <div class="text-danger field-validation-error" data-valmsg-for="Driver.Occupation"
+                         data-valmsg-replace="true">Occupation Field is required.</div>
+                </div>              
+            </div>
+
+            <div class="form-group">
+                <label for="edlevel" class="control-label col-xs-2">Education Level</label>
+                <div class="col-xs-3">
+                    <select class="form-control" data-val="true"
+                            data-val-required="Education field is required."
+                            id="Driver.EducationLevel" name="Driver.EducationLevel"></select>
+                    <div class="text-danger field-validation-error" data-valmsg-for="Driver.EducationLevel"
+                         data-valmsg-replace="true">The Education Level field is required.</div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="cr" class="control-label col-xs-2">Criminal Record?</label>
+                <div class="col-xs-3">
+                    <div class="radio-inline">
+                        @Html.RadioButtonFor(m => m.Driver.CriminalRecord, "true") Yes
+                    </div>
+                    <div class="radio-inline">
+                        @Html.RadioButtonFor(m => m.Driver.CriminalRecord, "false") No
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="cnr" class="control-label col-xs-2">Prior Insurane Cancelled or Non Renew?</label>
+                <div class="col-xs-3">
+                    <div class="radio-inline">
+                        @Html.RadioButtonFor(m => m.Driver.CancelledNonRenew, "true") Yes
+                    </div>
+                    <div class="radio-inline">
+                        @Html.RadioButtonFor(m => m.Driver.CancelledNonRenew, "false") No
+                    </div>
+
+                </div>
+            </div>
+
+            <center>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-10">
+                        <input type="submit" name="submitform" class="btn btn-info" value="Add" />
+                        <input type="submit" name="submitform" class="btn btn-info" value="Next">
+                    </div>
+                </div>
+            </center>
+
+        </form>
+
+    }
+</div>
+
+<center>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Driver.FirstName)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Driver.LastName)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Driver.State)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Driver.DriversLicenseNumber)
+                </th>
+                <th>
+                    @Html.DisplayName("Commands")
+                </th>                               
+            </tr>
+
+            @foreach (var item in Model.Drivers)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.State)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DriversLicenseNumber)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.DriverId)
+                        <button id="editDriver" value="Edit">Edit</button>
+                        <button id="deleteDriver" value="Delete">Delete</button> 
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+
+    </div>
+</center>

@@ -1,0 +1,210 @@
+﻿@model  InsuranceAgencyQuotingSystem.Models.CreateQuoteModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+@section Sidebar {
+    <p> This sidebar has "Create Quote Page" specific content</p>
+    <center>
+        <table>
+            <tr>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Page
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    @if (Model.Quote.ApplicantPageValid)
+                    {
+                    <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                    <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Applicant Information Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.ApplicantQuoteInfoPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Policy Information Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.DriverPageValid)
+                    {
+                    <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                    <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Driver Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.VehiclePageValid)
+                    {
+                    <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                    <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Vehicle Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.CoveragePageValid)
+                    {
+                    <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                    <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Coverage Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.RatePageValid)
+                    {
+                    <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                    <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Rate Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.BuyPolicyPageValid)
+                    {
+                    <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                    <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Buy Policy Page</a>
+                </td>
+            </tr>
+        </table>
+    </center>
+
+}
+
+
+
+
+<center>
+    <div class="has-error form-group">
+        <!-- 'has-error' class has been added on parent form-group div -->
+        @using (Html.BeginForm("CreateCustomer", "Quote", FormMethod.Post, new { @class = "form-horizontal", @id = "myform" }))
+        {
+            <form class="form-horizontal">
+                <h2>Customer Information</h2>
+
+
+                <div class="form-group">
+                    <label for="FullName" class="control-label col-xs-3">Full Name</label>
+                    <div class="col-xs-2">
+                        <label for="LasFirstName">First Name</label>
+                        @Html.TextBoxFor(m => m.Applicant.FirstName, null, new { @class = "form-control", data_val_required = "The First name field is required.", type = "text" })
+                        <div class="text-danger field-validation-error" data-valmsg-for="Applicant.FirstName"
+                             data-valmsg-replace="true">The First name field is required.</div>
+                    </div>
+                    <div class="col-xs-1">
+                        <label for="Mi">M.I.</label>
+                        @Html.TextBoxFor(m => m.Applicant.MI, null, new { @class = "form-control" })
+                    </div>
+
+                    <div class="col-xs-2">
+                        <label for="LastName">Last name</label>
+                        @Html.TextBoxFor(m => m.Applicant.LastName, null, new { @class = "form-control", data_val_required = "The Last name Field is required." })
+                        <div class="text-danger field-validation-error" data-valmsg-for="Applicant.LastName"
+                             data-valmsg-replace="true">The Last name field is required.</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Date of Birth" class="control-label col-xs-3">Date of Birth </label>
+                    <div class="col-xs-2">
+                        @Html.TextBoxFor(m => m.Applicant.DOB, null, new { @class = "form-control", data_val_required = "The Date of Birth field is required.", type = "date" })
+                        <div class="text-danger field-validation-error" data-valmsg-for="Applicant.DOB"
+                             data-valmsg-replace="true">The Date of Birth field is required.</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ContactInfo" class="control-label col-xs-3">Contact Info</label>
+                    <div class="col-xs-2">
+                        <label for="HomePhone">Home Phone </label>
+                        @Html.TextBoxFor(m => m.Applicant.PhoneNumber, null, new { @class = "form-control", data_val_required = "The Phone Number Field is required." })
+                        <div class="text-danger field-validation-error" data-valmsg-for="Applicant.PhoneNumber"
+                             data-valmsg-replace="true">The Home Phone field is required.</div>
+                    </div>
+                    <div class="col-xs-2">
+                        <label for="CellPhone">Cell Phone Number</label>
+                        @Html.TextBoxFor(m => m.Applicant.CellNumber, null, new { @class = "form-control" })
+                    </div>
+
+                    <div class="col-xs-2">
+                        <label for="EmailAddress">Email Address</label>
+                        @Html.TextBoxFor(m => m.Applicant.EmailAddress, null, new { @class = "form-control", data_val_required = "The Email Address Field is required." })
+                        <div class="text-danger field-validation-error" data-valmsg-for="Applicant.EmailAddress"
+                             data-valmsg-replace="true">The Email Address field is required.</div>
+                    </div>
+                </div>
+
+
+
+                <center>
+                    <div class="row">
+                        <br>
+                        <input type="button" id="cancel" class="btn btn-info" value="Cancel">
+                        <input type="submit" id="submit" class="btn btn-info" value="Next  Button">
+
+                    </div>
+                </center>
+                </form>
+                }
+</div>
+</center>
+
+
+

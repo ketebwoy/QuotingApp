@@ -1,0 +1,372 @@
+﻿@model  InsuranceAgencyQuotingSystem.Models.CreateQuoteModel
+
+
+@{
+    ViewBag.Title = "CreateCoverages";
+}
+
+
+@section Sidebar {
+    <p> This sidebar has "Create Quote Page" specific content</p>
+    <center>
+        <table>
+            <tr>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Page
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    @if (Model.Quote.ApplicantPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Applicant Information Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.ApplicantQuoteInfoPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Policy Information Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.DriverPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Driver Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.VehiclePageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Vehicle Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.CoveragePageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Coverage Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.RatePageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Rate Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.BuyPolicyPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Buy Policy Page</a>
+                </td>
+            </tr>
+        </table>
+    </center>
+
+}
+
+<h2>CreateCoverages</h2>
+
+
+<div class="has-error form-group">
+    <!-- 'has-error' class has been added on parent form-group div -->
+    @using (Html.BeginForm("CreateCoverage", "Quote", FormMethod.Post, new { @class = "form-horizontal", @id = "myform" }))
+    {
+        <form class="form-horizontal">
+            <table class="table table-striped">
+                <tr>
+                    <th>
+                        <h2>
+                            <small> Policy Level Coverages </small>
+                        </h2>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label for="Liability" class="control-label col-xs-3">Liability BI/PD Coverage</label>
+                            <div class="col-xs-4">
+                                @Html.DropDownListFor(m => m.Coverages.LiabilityLimits, new SelectList(Model.Coverages.LiabilityLimits, "Key", "Value"), "-Please select a option-", new { @class = "form-control" })
+                                <div class="text-danger field-validation-error" data-valmsg-for="Coverages.LiabilityLimits"
+                                     data-valmsg-replace="true">
+                                    Please Select Liability Coverage.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="UninsuredMotorists" class="control-label col-xs-3">UnderInsured/Uninsured Motorists</label>
+                            <div class="col-xs-4">
+                                @Html.DropDownListFor(m => m.Coverages.UninsuredMotoristBILimits, new SelectList(Model.Coverages.UninsuredMotoristBILimits, "Key", "Value"), "-Please Select a option-", new { @class = "form-control" })
+                                <div class="text-danger field-validation-error" data-valmsg-for="Coverages.UninsuredMotoristBILimits"
+                                     data-valmsg-replace="true">Please Select Uninsured Motorists Coverage.</div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="PIP" class="control-label col-xs-3">Personal Injury Protection Coverage</label>
+                            <div class="col-xs-4">
+                                @Html.DropDownListFor(m => m.Coverages.PersonalInjuryProtectionLimits, new SelectList(Model.Coverages.PersonalInjuryProtectionLimits, "Key", "Value"), "-Please Select a option-", new { @class = "form-control" })
+                                <div class="text-danger field-validation-error" data-valmsg-for="Coverages.PersonalInjuryProtectionLimits"
+                                     data-valmsg-replace="true">Please Select Personal Injury Protection Coverage.</div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Medical" class="control-label col-xs-3">Medical Payments Coverage</label>
+                            <div class="col-xs-4">
+                                @Html.DropDownListFor(m => m.Coverages.MedicalPaymentsLimits, new SelectList(Model.Coverages.MedicalPaymentsLimits, "Key", "Value"), "-Please Select a option-", new { @class = "form-control" })
+                                <div class="text-danger field-validation-error" data-valmsg-for="Coverages.MedicalPaymentsLimits"
+                                     data-valmsg-replace="true">Please Select Medical Payments Coverage.</div>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+
+
+            </table>
+
+            <br />
+            <br />
+            <center>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>
+                                <h2>
+                                    <small> Vehicle Level Coverages </small>
+                                </h2>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Vehicle.Year)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Vehicle.Make)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Vehicle.Model)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Vehicle.Detail)
+                            </th>
+                            <th>
+                                @Html.DisplayName("Commands")
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model.Vehicles)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Year)
+                                </td>
+
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Make)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Model)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Detail)
+                                </td>
+                                <td>
+                                    @Html.HiddenFor(modelItem => item.DriverId)
+                                   <a class="btn btn-success" onclick="ShowModelPopUp(@item.VehicleId);" data-toggle="modal" data-target=".bootstrapmodal"><span class="glyphicon glyphicon-eye-open">Update Coverages</span></a>
+                                    
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+            </center>
+
+            <center>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-10">
+                        @Html.HiddenFor(m => m.Quote.QuoteId);
+                        <input type="submit" name="submitform" class="btn btn-info" value="Save Coverage" />
+                    </div>
+                </div>
+
+            </center>
+
+        </form>
+
+
+
+    }
+
+    <center>
+        <div class="modal fade bootstrapmodal" id="bootstrapmodal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        Update Vehicle Coverage
+                    </div>
+
+                    @using (Html.BeginForm("UpdateVehicleCoverage", "Quote", FormMethod.Post, new { id = "coverageForm" }))
+                    {
+                        <div class="modal-body">
+                            @Html.Hidden("vehicleId")
+                            <table class="table table-striped">
+                                <tr>
+                                    <td>
+                                        <label for="Comprehensive" class="control-label col-xs-4">Comprehensive Coverage</label>
+                                    </td>
+                                    <td>
+                                        @Html.DropDownListFor(m => m.Coverages.ComprehensiveLimits, new SelectList(Model.Coverages.ComprehensiveLimits, "Key", "Value"), "-Please select a option-", new { @class = "form-control" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><br /></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="Collision" class="control-label col-xs-4">Collision Coverage</label>
+                                    </td>
+                                    <td>
+                                        @Html.DropDownListFor(m => m.Coverages.CollisionLimits, new SelectList(Model.Coverages.CollisionLimits, "Key", "Value"), "-Please select a option-", new { @class = "form-control" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><br /></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="Rental" class="control-label col-xs-4">Rental Coverage</label>
+                                    </td>
+                                    <td>
+                                        @Html.DropDownListFor(m => m.Coverages.RentalLimits, new SelectList(Model.Coverages.RentalLimits, "Key", "Value"), "-Please select a option-", new { @class = "form-control" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><br /></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="RoadSide" class="control-label col-xs-4">Roadside assistance Coverage</label>
+                                    </td>
+                                    <td>
+                                        @Html.DropDownListFor(m => m.Coverages.RoadsideCoverage, new SelectList(Model.Coverages.RoadsideCoverage, "Key", "Value"), "-Please select a option-", new { @class = "form-control" })
+                                   </td>
+                                </tr>
+                                <tr>
+                                    <td><br /></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="Gap" class="control-label col-xs-4">Gap Loan\Lease Coverage</label>
+                                    </td>
+                                    <td>
+                                        @Html.DropDownListFor(m => m.Coverages.GapCoverageLimits, new SelectList(Model.Coverages.GapCoverageLimits, "Key", "Value"), "-Please select a option-", new { @class = "form-control" })
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                             
+
+                        </div>
+                        <div class="modal-footer">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                       
+                                    </td>
+                                    <td>
+                                       <button type="button" class="btn btn-primary" id="submitform" onclick="SubmitCoverage()" data-dismiss="modal">Save Changes</button>
+                                      </td>
+                                </tr>
+                            </table>
+                           
+
+                            
+                           
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </center>
+
+
+

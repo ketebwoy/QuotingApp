@@ -1,0 +1,270 @@
+﻿@model  InsuranceAgencyQuotingSystem.Models.CreateQuoteModel
+
+
+@{
+    ViewBag.Title = "AddIncidents";
+}
+
+
+@section Sidebar {
+    <p> This sidebar has "Create Quote Page" specific content</p>
+    <center>
+        <table>
+            <tr>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Page
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    @if (Model.Quote.ApplicantPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Applicant Information Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.ApplicantQuoteInfoPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Policy Information Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.DriverPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Driver Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.VehiclePageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Vehicle Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.CoveragePageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Coverage Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.RatePageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Rate Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.BuyPolicyPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Buy Policy Page</a>
+                </td>
+            </tr>
+        </table>
+    </center>
+
+}
+
+<h2>Add Incidents</h2>
+
+@using (Html.BeginForm("AddIncidents", "Quote", FormMethod.Post, new { @class = "form-horizontal", @id = "myform" }))
+{
+    <center>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr>
+                    <th>
+                        Incident Type
+                    </th>
+                    <th>
+                        Incident Cost
+                    </th>
+                    <th>
+                        Time Frame
+                    </th>
+                    <th>
+                        Driver Involved
+                    </th>
+                    <th>
+                        At Fault
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <select class="form-control" data-val="true"
+                                data-val-required="The Type field is required."
+                                id="Incident.Type" name="Incident.Type">
+                            <option value="-1">Select a Driver</option>
+                            <option value="1">Claim</option>
+                            <option value="2">Incident</option>
+                        </select>
+                        <div class="text-danger field-validation-error" data-valmsg-for="Incident.Type"
+                             data-valmsg-replace="true">Please select a Type.</div>
+                    </td>
+                    <td>
+                        <select class="form-control" data-val="true"
+                                data-val-required="The Cost field is required."
+                                id="Incident.Cost" name="Incident.Cost">
+                            <option value="-1">Select a Cost</option>
+                            <option value="1"><= $250</option>
+                            <option value="2"><= $500</option>
+                            <option value="3"><= $1000</option>
+                            <option value="4">> $1000</option>
+                        </select>
+                        <div class="text-danger field-validation-error" data-valmsg-for="Incident.Cost"
+                             data-valmsg-replace="true">Please select a Cost.</div>
+                    </td>
+                    <td>
+                        <select class="form-control" data-val="true"
+                                data-val-required="The Time Frame field is required."
+                                id="Incident.TimeFrame" name="Incident.TimeFrame">
+                            <option value="-1">Select a Time period</option>
+                            <option value="1">< a year ago</option>
+                            <option value="2">< 2 years ago</option>
+                            <option value="3">< 3 years ago</option>
+                            <option value="4">> 3 years ago</option>
+                        </select>
+                        <div class="text-danger field-validation-error" data-valmsg-for="Incident.TimeFrame"
+                             data-valmsg-replace="true">Please select a incident time period.</div>
+                    </td>
+                    <td>
+                        <select class="form-control" data-val="true"
+                                data-val-required="The Model field is required."
+                                id="Incident.DriverId" name="Incident.DriverId">
+                            <option value="-1">Select a Driver</option>
+                            @foreach (var driver in Model.Drivers)
+                            {
+                                var fullName = driver.FirstName + " " + driver.LastName;
+                            <option value=@driver.DriverId>@fullName</option>
+
+                            }
+                        </select>
+                        <div class="text-danger field-validation-error" data-valmsg-for="Incident.DriverId"
+                             data-valmsg-replace="true">Please select a driver.</div>
+                    </td>
+                    <td>
+                        <div class="col-md-3 nopadding">
+                             <div class="radio-inline">
+                                @Html.RadioButton("Incident.AtFault", "true") Yes
+                            
+                                @Html.RadioButton("Incident.AtFault", "false") No
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <br>
+            <input type="button" id="cancel" class="btn btn-info" value="Back">
+            <input type="submit" name="submitform" class="btn btn-info" value="Add">
+            <input type="submit" name="submitform" class="btn btn-info" value="Next">
+
+        </div>
+
+    </center>
+}
+
+<br />
+<center>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    Incident Type
+                </th>
+                <th>
+                    Incident Cost
+                </th>
+                <th>
+                    @Html.DisplayName("Commands")
+                </th>
+            </tr>
+
+            @foreach (var item in Model.Incidents)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cost)
+                    </td>
+                    <td>
+                        <button id="editIncident" value="Edit">Edit</button>
+                        <button id="deleteIncident" value="Delete">Delete</button>
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+
+    </div>
+</center>

@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsuranceAgencyQuotingSystem", "InsuranceAgencyQuotingSystem\InsuranceAgencyQuotingSystem.csproj", "{B1A02256-8DF1-4095-AC56-1CB86A5812F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{E0B5BC69-D333-44C8-8FC2-F0F2BF83368A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1A02256-8DF1-4095-AC56-1CB86A5812F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A02256-8DF1-4095-AC56-1CB86A5812F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A02256-8DF1-4095-AC56-1CB86A5812F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A02256-8DF1-4095-AC56-1CB86A5812F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0B5BC69-D333-44C8-8FC2-F0F2BF83368A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0B5BC69-D333-44C8-8FC2-F0F2BF83368A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0B5BC69-D333-44C8-8FC2-F0F2BF83368A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0B5BC69-D333-44C8-8FC2-F0F2BF83368A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://keithsapps.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = DAL\\DAL.csproj
+		SccProjectName1 = DAL
+		SccLocalPath1 = DAL
+		SccProjectUniqueName2 = InsuranceAgencyQuotingSystem\\InsuranceAgencyQuotingSystem.csproj
+		SccProjectName2 = InsuranceAgencyQuotingSystem
+		SccLocalPath2 = InsuranceAgencyQuotingSystem
+	EndGlobalSection
+EndGlobal

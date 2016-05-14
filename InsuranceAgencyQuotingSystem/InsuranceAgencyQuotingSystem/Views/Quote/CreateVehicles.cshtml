@@ -1,0 +1,398 @@
+﻿@model  InsuranceAgencyQuotingSystem.Models.CreateQuoteModel
+
+
+@{
+    ViewBag.Title = "Add Vehicles to Policies";
+}
+
+
+
+@section Sidebar {
+        <p> This sidebar has "Create Quote Page" specific content</p>
+        <center>
+            <table>
+                <tr>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Page
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        @if (Model.Quote.ApplicantPageValid)
+                        {
+                            <span class="glyphicon glyphicon-check" style="color:green"></span>
+                        }
+                        else
+                        {
+                            <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                        }
+                    </td>
+                    <td>
+                        <a href="#">Applicant Information Page</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @if (Model.Quote.ApplicantQuoteInfoPageValid)
+                        {
+                            <span class="glyphicon glyphicon-check" style="color:green"></span>
+                        }
+                        else
+                        {
+                            <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                        }
+                    </td>
+                    <td>
+                        <a href="#">Quote Information Page</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @if (Model.Quote.DriverPageValid)
+                        {
+                            <span class="glyphicon glyphicon-check" style="color:green"></span>
+                        }
+                        else
+                        {
+                            <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                        }
+                    </td>
+                    <td>
+                        <a href="#">Driver Page</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @if (Model.Quote.VehiclePageValid)
+                        {
+                            <span class="glyphicon glyphicon-check" style="color:green"></span>
+                        }
+                        else
+                        {
+                            <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                        }
+                    </td>
+                    <td>
+                        <a href="#">Vehicle Page</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @if (Model.Quote.CoveragePageValid)
+                        {
+                            <span class="glyphicon glyphicon-check" style="color:green"></span>
+                        }
+                        else
+                        {
+                            <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                        }
+                    </td>
+                    <td>
+                        <a href="#">Coverage Page</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @if (Model.Quote.RatePageValid)
+                        {
+                            <span class="glyphicon glyphicon-check" style="color:green"></span>
+                        }
+                        else
+                        {
+                            <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                        }
+                    </td>
+                    <td>
+                        <a href="#">Rate Page</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @if (Model.Quote.BuyPolicyPageValid)
+                        {
+                            <span class="glyphicon glyphicon-check" style="color:green"></span>
+                        }
+                        else
+                        {
+                            <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                        }
+                    </td>
+                    <td>
+                        <a href="#">Buy Policy Page</a>
+                    </td>
+                </tr>
+            </table>
+        </center>
+
+    }
+
+    
+
+<center>
+    <div class="has-error form-group">
+        <!-- 'has-error' class has been added on parent form-group div -->
+        @using (Html.BeginForm("CreateVehicles", "Quote", FormMethod.Post, new { @class = "form-horizontal", @id = "myform" }))
+        {
+            <form class="form-horizontal">
+                @Html.Hidden("edmundApiKey", "ntw94a7mf626pqsdbznxjupd")
+                @Html.Hidden("edmondApiUrl", "https://api.edmunds.com/api/")
+                @Html.HiddenFor(m => m.Quote.QuoteId)
+                @Html.HiddenFor(m => m.Quote.ApplicantId)
+                <h2>Vehicles Information</h2>
+
+                <div class="form-group">
+                    <label for="VehicleINfo" class="control-label col-xs-3">Year Manufactured</label>
+                    <div class="col-xs-3">
+                      <select class="form-control" data-val="true"
+                                data-val-required="The Model field is required."
+                                id="Vehicle.Year" name="Vehicle.Year" onchange="getVehicleMakes();"></select>
+                        <div class="text-danger field-validation-error" data-valmsg-for="Vehicle.Year"
+                             data-valmsg-replace="true">The vehicle Year field is required.</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="VehicleINfo" class="control-label col-xs-3">Vehicle Information</label>
+                    <div class="col-xs-3">
+                        <label for="VehcilesModel">Make</label>
+                        <select class="form-control" data-val="true"
+                                data-val-required="The Model field is required."
+                                id="Vehicle.Make" name="Vehicle.Make" onchange="getVehicleModels();"></select>
+                        <div class="text-danger field-validation-error" data-valmsg-for="Vehicle.Make"
+                             data-valmsg-replace="true">The vehicle make field is required.</div>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <label for="VehiclesMake">Model</label>
+                        <select class="form-control" data-val="true"
+                                data-val-required="The Model field is required."
+                                id="Vehicle.Model" name="Vehicle.Model" onchange="getVehicleModelDetails();"></select>
+                        <div class="text-danger field-validation-error" data-valmsg-for="Vehicle.Model"
+                             data-valmsg-replace="true">The vehicle model field is required.</div>
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label for="Style" class="control-label col-xs-3">Style and Details</label>
+                    <div class="col-xs-5">
+                        <select class="form-control" data-val="true"
+                                data-val-required="The details field is required."
+                                id="Vehicle.Detail" name="Vehicle.Detail" onchange="getWheels();"></select>
+                        <div class="text-danger field-validation-error" data-valmsg-for="Vehicle.Detail"
+                             data-valmsg-replace="true">The details field is required.</div>
+                        </div>
+                    </div>
+
+
+                <div class="form-group">
+                    <label for="Cost" class="control-label col-xs-3">Cost of Vehicle New</label>
+                    <div class="col-xs-5">
+                        @Html.TextBoxFor(m => m.Vehicle.CostNew, null, new { @class = "form-control", data_val_required = "Cost Field is required.", type = "number" })
+                        <div class="text-danger field-validation-error" data-valmsg-for="Vehicle.CostNew"
+                             data-valmsg-replace="true">Cost Field is required.</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Wheels" class="control-label col-xs-3">Drive Train/Wheels/Brakes</label>
+                    <div class="col-xs-5">
+                        @Html.TextBoxFor(m => m.Vehicle.DriveTrainWheels, null, new { @class = "form-control", data_val_required = "Field is required." })
+                        <div class="text-danger field-validation-error" data-valmsg-for="Vehicle.DriveTrainWheels"
+                             data-valmsg-replace="true">Field is required.</div>
+                      
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="GaragedElseWhere" class="control-label col-xs-3">Is this vehicle garaged at same address</label>
+                    <div class="col-xs-5">
+                        <div class="radio-inline">
+                            @Html.RadioButtonFor(m => m.Vehicle.GaragedElseWhere, "true") Yes
+                        </div>
+                        <div class="radio-inline">
+                            @Html.RadioButtonFor(m => m.Vehicle.GaragedElseWhere, "false") No
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="AntiTheft" class="control-label col-xs-3">AntiTheft</label>
+                    <div class="col-xs-5">
+                        <select class="form-control" data-val="true"
+                                data-val-required="The AntiTheft field is required."
+                                id="Vehicle.AntiTheft" name="AntiTheft">
+                            <option value="0">Select One</option>
+                            <option value="1">Alarm</option>
+                            <option value="2">Vehicle Recovery</option>
+                            <option value="3">CAT Program</option>
+                            <option value="4">VIN GLASS Etching</option>
+                            <option value="5">Locking Device</option>
+                            <option value="6">Other</option>
+                            <option value="7">Active Disabling Device</option>
+                            <option value="8">Passive Disabling Device</option>
+                            <option value="9">None</option>
+                        </select>
+                        <div class="text-danger field-validation-error" data-valmsg-for="AntiTheft"
+                             data-valmsg-replace="true">The AntiTheft field is required.</div>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="OwnedStatus" class="control-label col-xs-3">Owned/Leased</label>
+                    <div class="col-xs-5">
+                        <select class="form-control" data-val="true"
+                                data-val-required="The Owned Status field is required."
+                                id="Vehicle.OwnedLeased" name="Vehicle.OwnedLeased">
+                            <option value="0">Select One</option>
+                            <option value="1">Owned</option>
+                            <option value="2">Leased</option>
+                        </select>
+                        <div class="text-danger field-validation-error" data-valmsg-for="Vehicle.OwnedLeased"
+                             data-valmsg-replace="true">The OwnedStatus field is required.</div>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="YearsOwned" class="control-label col-xs-3">Number of years owned of leased</label>
+                    <div class="col-xs-5">
+                        <select class="form-control" data-val="true"
+                                data-val-required="The Years Owned field is required."
+                                id="Vehicle.YearsOwnedLeased" name="Vehicle.YearsOwnedLeased">
+                            <option value="0">Select One</option>
+                            <option value="1">Less than 1 year</option>
+                            <option value="2">At least 1 year, but less than 3 years</option>
+                            <option value="3">At least 3 years, but less than 5 years</option>
+                            <option value="4">At least 3 years, but less than 5 years</option>
+                        </select>
+                        <div class="text-danger field-validation-error" data-valmsg-for="Vehicle.YearsOwnedLeased"
+                             data-valmsg-replace="true">The Years Owned field is required.</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="wsmiles" class="control-label col-xs-3">Work/School Mileage 1 way</label>
+                    <div class="col-xs-5">
+                        @Html.TextBoxFor(m => m.Vehicle.MilesToWorkSchool, null, new { @class = "form-control", data_val_required = "Field is required." })
+                        <div class="text-danger field-validation-error" data-valmsg-for="Vehicle.MilesToWorkSchool"
+                             data-valmsg-replace="true">Field is required.</div>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="vehicleowners" class="control-label col-xs-3">Vehicle registered to applicant or Spouse?</label>
+                    <div class="col-xs-5">
+                        Yes:   @Html.RadioButton("vehicleowners", "Yes")
+                        No: @Html.RadioButton("vehicleowners", "No")
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="miles" class="control-label col-xs-3">Annual Mileage</label>
+                    <div class="col-xs-5">
+                        @Html.TextBoxFor(m => m.Vehicle.AnnualMileage, null, new { @class = "form-control", data_val_required = "Field is required." })
+                        <div class="text-danger field-validation-error" data-valmsg-for="Vehicle.AnnualMileage"
+                             data-valmsg-replace="true">Field is required.</div>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="VehicleUse" class="control-label col-xs-3">Vehicle Useage</label>
+                    <div class="col-xs-5">
+
+                        <select class="form-control" data-val="true"
+                                data-val-required="The Usage field is required."
+                                id="Vehicle.Usage" name="Vehicle.Usage">
+                            <option value="0">Select One</option>
+                            <option value="1">Pleasure</option>
+                            <option value="2">Business Use</option>
+                            <option value="3">School/Work Use</option>
+                            <option value="4">Senior Use</option>
+                        </select>
+                        <div class="text-danger field-validation-error" data-valmsg-for="Vehicle.Usage"
+                             data-valmsg-replace="true">The Vehicle Use field is required.</div>
+                    </div>
+                </div>
+
+         
+                        <center>
+
+                            <div class="row">
+                                <br>
+                                <input type="button" id="cancel" class="btn btn-info" value="Cancel">
+
+
+                                @Html.Hidden("vehicleVals")
+                                <input type="submit" name="submitform" class="btn btn-info" value="Add" />
+
+                                <input type="submit" name="submitform" class="btn btn-info" value="Next">
+
+                            </div>
+                        </center>
+            </form>
+        }
+</div>
+
+    <center>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Vehicle.Year)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Vehicle.Make)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Vehicle.Model)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Vehicle.Detail)
+                    </th>
+                </tr>
+
+                @foreach (var item in Model.Vehicles)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Year)
+                        </td>
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Make)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Model)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Detail)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+
+        </div>
+    </center>
+
+</center>

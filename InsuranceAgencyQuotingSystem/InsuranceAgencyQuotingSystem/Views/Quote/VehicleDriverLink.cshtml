@@ -1,0 +1,189 @@
+﻿@model InsuranceAgencyQuotingSystem.Models.CreateQuoteModel
+
+
+@{
+    ViewBag.Title = "VehicleDriverLink";
+}
+
+
+@section Sidebar {
+    <p> This sidebar has "Create Quote Page" specific content</p>
+    <center>
+        <table>
+            <tr>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Page
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    @if (Model.Quote.ApplicantPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Applicant Information Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.ApplicantQuoteInfoPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Policy Information Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.DriverPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Driver Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.VehiclePageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Vehicle Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.CoveragePageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Coverage Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.RatePageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Rate Page</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.BuyPolicyPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Buy Policy Page</a>
+                </td>
+            </tr>
+        </table>
+    </center>
+
+}
+
+<h2>Select Primary Drivers for Vehicles</h2>
+
+@using (Html.BeginForm("VehicleDriverLink", "Quote", FormMethod.Post, new { @class = "form-horizontal", @id = "myform" }))
+{
+
+    <center>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr>
+                    <th>
+                       <label>Vehicle</label>
+                    </th>
+                    <th>
+                       <label>Driver</label>
+                    </th>
+                                      
+                </tr>
+
+                @foreach (var item in Model.Vehicles)
+                {
+                    var ddId = "driver_" + item.VehicleId;
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Year)
+                            @Html.DisplayFor(modelItem => item.Make)
+                            @Html.DisplayFor(modelItem => item.Model)
+                        </td>
+                        <td>
+                            <select class="form-control" data-val="true"
+                                    data-val-required="The Model field is required."
+                                    id=@ddId name=@ddId>
+                                <option value="-1">Select a Driver</option>
+                                @foreach (var driver in Model.Drivers)
+                                {
+                                    var fullName = driver.FirstName + " " + driver.LastName;
+                                    <option value=@driver.DriverId>@fullName</option>
+                                 
+                                }
+                            </select>
+                            <div class="text-danger field-validation-error" data-valmsg-for=@ddId
+                                 data-valmsg-replace="true">Please select a driver.</div>
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </div>
+        <div class="row">
+            <br>
+            <input type="button" id="cancel" class="btn btn-info" value="Back">
+            <input type="submit" name="submitform" class="btn btn-info" value="Next">
+
+        </div>
+    </center>
+}
+
+
