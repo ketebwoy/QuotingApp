@@ -50,21 +50,7 @@
                         <a href="#">Quote Information Page</a>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        @if (Model.Quote.DriverPageValid)
-                        {
-                            <span class="glyphicon glyphicon-check" style="color:green"></span>
-                        }
-                        else
-                        {
-                            <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
-                        }
-                    </td>
-                    <td>
-                        <a href="#">Driver Page</a>
-                    </td>
-                </tr>
+
                 <tr>
                     <td>
                         @if (Model.Quote.VehiclePageValid)
@@ -80,6 +66,22 @@
                         <a href="#">Vehicle Page</a>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        @if (Model.Quote.DriverPageValid)
+                        {
+                            <span class="glyphicon glyphicon-check" style="color:green"></span>
+                        }
+                        else
+                        {
+                            <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                        }
+                    </td>
+                    <td>
+                        <a href="#">Driver Page</a>
+                    </td>
+                </tr>
+
                 <tr>
                     <td>
                         @if (Model.Quote.CoveragePageValid)

@@ -33,96 +33,62 @@ namespace InsuranceAgencyQuotingSystem.Controllers
         }
 
         // GET: Quote/Create
-        public ActionResult CreateCustomer(CreateQuoteModel createQuoteModel)
+        public ActionResult CreateCustomer(int qId = 0)
         {
-            if(createQuoteModel.Quote.QuoteId > 1)
+            // testAgentData 
+            var agent = new Agent(); 
+            agent.FirstName = "Keith";
+            agent.LastName = "Drummond";
+            agent.EmailAddress = "Agent1@InsuranceAgency.com";
+            agent.AgentId = 1;
+            agent.PhoneNumber = "5618460337";
+            agent.CreatedDate = DateTime.Now.AddDays(-14);
+            agent.LastModifiedDate = DateTime.Now;
+           
+
+            if (qId > 0)
             {
-                var createQuoteModelNew = createQuoteModel;
-                return View(createQuoteModelNew);
+                var createQuoteModel = new CreateQuoteModel();
+                createQuoteModel.Agent = agent; 
+                var quote = _ctx.Quotes.GetQuoteById(qId);
+                var applicant = _ctx.Applicants.GetApplicantById(quote.ApplicantId);
+                createQuoteModel.Quote = quote;
+                createQuoteModel.Applicant = applicant; 
+                return View(createQuoteModel);
             }
             else
             {
                 // TODO: Add insert logic here
                 var createQuoteModelNew = new CreateQuoteModel();
-
-                // testAgentData 
-                createQuoteModelNew.Agent.FirstName = "Keith";
-                createQuoteModelNew.Agent.LastName = "Drummond";
-                createQuoteModelNew.Agent.EmailAddress = "Agent1@InsuranceAgency.com";
-                createQuoteModelNew.Agent.AgentId = 1;
-                createQuoteModelNew.Agent.PhoneNumber = "5618460337";
-                createQuoteModelNew.Agent.CreatedDate = DateTime.Now.AddDays(-14);
-                createQuoteModelNew.Agent.LastModifiedDate = DateTime.Now;
                 return View(createQuoteModelNew);
+
             }
 
             
         }
 
-        // POST: Quote/Create
-        [HttpPost]
-        public ActionResult CreateCustomer(Applicant applicant)
+
+
+        public ActionResult CreatePolicy(int qId = 0)
         {
-            try
+
+            if (qId > 0)
             {
                 var createQuoteModel = new CreateQuoteModel();
-
-                createQuoteModel.Applicant = applicant; 
-
-                createQuoteModel.Applicant.ApplicantId = _ctx.Applicants.AddApplicant(applicant);
-                createQuoteModel.Quote.ApplicantPageValid = true;
-                createQuoteModel.Quote.ApplicantId = createQuoteModel.Applicant.ApplicantId;
-                createQuoteModel.Quote.ApplicantPageValid = true;
-                createQuoteModel.Quote.QuoteId = _ctx.Quotes.AddQuote(createQuoteModel.Quote);
-
-
-
-                TempData["createQuoteModel"] = createQuoteModel;
-                return RedirectToAction("CreatePolicy", createQuoteModel);
-            }
-            catch
-            {
-                return View(); 
-                
-            }
-        }
-
-        public ActionResult CreatePolicy(CreateQuoteModel createQuoteModel2)
-        {
-            var createQuoteModel = (CreateQuoteModel)TempData["createQuoteModel"];
-
-            if(createQuoteModel == null)
-            {
-                createQuoteModel = new CreateQuoteModel(); 
-            }
-            return View(createQuoteModel);
-        }
-
-        [HttpPost]
-        public ActionResult CreatePolicy(Quote quote)
-        {
-            try
-                {
-                var createQuoteModel = new CreateQuoteModel();
-                createQuoteModel.Applicant = _ctx.Applicants.GetApplicantById(quote.ApplicantId);
-                quote.AgentId = -1;
-                quote.ApplicantPageValid = true;
-                quote.ApplicantQuoteInfoPageValid = true;
-
+                var quote = _ctx.Quotes.GetQuoteById(qId);
+                var applicant = _ctx.Applicants.GetApplicantById(quote.ApplicantId);
                 createQuoteModel.Quote = quote;
-                _ctx.Quotes.Update(quote);
+                createQuoteModel.Applicant = applicant;
+                return View(createQuoteModel);
 
-                TempData["createQuoteModel"] = createQuoteModel;
-                return RedirectToAction("CreateVehicles", createQuoteModel);
-                }
-                catch (Exception ex)
-                {
-                    return View();
-                    throw;
-                }
-            
+            }
+            else
+            {
+               return RedirectToAction("CreateCustomer", 0);
+            }
         }
 
+        
         public ActionResult CreateDrivers()
         {
             var createQuoteModel = new CreateQuoteModel(); // (CreateQuoteModel)TempData["createQuoteModel"];
@@ -227,13 +193,21 @@ namespace InsuranceAgencyQuotingSystem.Controllers
             
         }
 
-        public ActionResult CreateVehicles()
+        public ActionResult CreateVehicles(int qId = 0)
         {
-            var createQuoteModel = new CreateQuoteModel();  //(CreateQuoteModel)TempData["createQuoteModel"];
-            createQuoteModel.Applicant = _ctx.Applicants.GetApplicantById(55);
-            createQuoteModel.Quote = _ctx.Quotes.GetQuoteById(16);
-            createQuoteModel.Vehicles = _ctx.Vehicles.GetAllVehicles().FindAll(p => p.QuoteId == 16); 
-            return View(createQuoteModel);
+            if(qId > 0)
+            {
+                var createQuoteModel = new CreateQuoteModel();
+                createQuoteModel.Quote = _ctx.Quotes.GetQuoteById(qId);
+                createQuoteModel.Applicant = _ctx.Applicants.GetApplicantById(createQuoteModel.Quote.ApplicantId);            
+                createQuoteModel.Vehicles = _ctx.Vehicles.GetAllVehicles().FindAll(p => p.QuoteId == qId);
+                return View(createQuoteModel);
+            }
+            else
+            {
+                return RedirectToAction("CreateCustomer", 0);
+            }
+
         }
 
         [HttpPost]
@@ -419,6 +393,166 @@ namespace InsuranceAgencyQuotingSystem.Controllers
         #endregion
 
         #region Json Actions 
+
+        // POST: Quote/Create
+        [HttpPost]
+        public JsonResult CreateCustomerAjax(string fn,string mi, string ln, string dob, string pn, string cn, string email)
+        {
+            try
+            {
+                var createQuoteModel = new CreateQuoteModel();
+
+                createQuoteModel.Applicant.FirstName = fn;
+                createQuoteModel.Applicant.MI = mi;
+                createQuoteModel.Applicant.LastName = ln;
+                createQuoteModel.Applicant.DOB = Convert.ToDateTime(dob);
+                createQuoteModel.Applicant.PhoneNumber = pn;
+                createQuoteModel.Applicant.CellNumber = cn;
+                createQuoteModel.Applicant.EmailAddress = email;
+
+                createQuoteModel.Applicant.ApplicantId = _ctx.Applicants.AddApplicant(createQuoteModel.Applicant);
+                createQuoteModel.Quote.ApplicantPageValid = true;
+                createQuoteModel.Quote.ApplicantId = createQuoteModel.Applicant.ApplicantId;
+                createQuoteModel.Quote.ApplicantPageValid = true;
+                createQuoteModel.Quote.QuoteId = _ctx.Quotes.AddQuote(createQuoteModel.Quote);
+
+
+                return Json(createQuoteModel.Quote.QuoteId, JsonRequestBehavior.AllowGet);
+
+            }
+            catch
+            {
+                return Json(-1, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+        [HttpPost]
+        public JsonResult CreatePolicyAjax(string qid, string a1, string a2, string ct, string st, string zip, string yrs, string numr, string otv, string mci, string pi, string pif)
+        {
+            try
+            {
+                var quote = _ctx.Quotes.GetQuoteById(Convert.ToInt32(qid));
+               
+                   quote.AddressLine1 = a1;
+                   quote.AddressLine2 = a2;
+                   quote.City = ct;
+                   quote.State = st;
+                   quote.ZipCode = zip;
+                   quote.YearsAtAddress = Convert.ToInt32(yrs);
+                   quote.NumResidentsinHouehold = Convert.ToInt32(numr);
+                   quote.OtherVehiclesInHouseHold = Convert.ToBoolean(otv);
+                   quote.MonthsWithCurrentInsurance = Convert.ToInt32(mci);
+                   quote.PriorInsuranceCompany = (pi);
+                   quote.PriorInsuranceCompanyFlag = Convert.ToBoolean(pif);
+
+                     quote.AgentId = -1;
+                     quote.ApplicantPageValid = true;
+                     quote.ApplicantQuoteInfoPageValid = true;
+
+                     _ctx.Quotes.Update(quote);
+                
+
+                return Json(quote.QuoteId, JsonRequestBehavior.AllowGet);
+
+            }
+            catch
+            {
+                return Json(-1, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult CreateVehicleAjax(string qid, string a1, string a2, string ct, string st, string zip, string yrs, string numr, string otv, string mci, string pi, string pif)
+        {
+
+            try
+            {
+                var quote = _ctx.Quotes.GetQuoteById(Convert.ToInt32(qid));
+                var createQuoteModel = new CreateQuoteModel();
+
+                #region buildVehicle
+                var quoteId = Convert.ToInt32(qid);                
+                var applicant = _ctx.Applicants.GetApplicantById(quote.ApplicantId);
+                var newVehicle = new Vehicle();
+                createQuoteModel.Applicant = applicant;
+
+                newVehicle.Year = collection["Vehicle.Year"];
+                newVehicle.Make = collection["Vehicle.Make"];
+                newVehicle.Model = collection["Vehicle.Model"];
+                newVehicle.Detail = collection["Vehicle.Detail"];
+                newVehicle.CostNew = Convert.ToDouble(collection["Vehicle.CostNew"]);
+                newVehicle.DriveTrainWheels = collection["Vehicle.DriveTrainWheels"];
+                newVehicle.YearsOwnedLeased = Convert.ToInt32(collection["Vehicle.YearsOwnedLeased"]);
+                newVehicle.GaragedElseWhere = Convert.ToBoolean(collection["Vehicle.GaragedElseWhere"]);
+
+
+
+                // if (newVehicle.GaragedElseWhere)
+                //{
+                //get garaging address
+                //newVehicle.GaragingAddress1 = collection["Vehicle.GaragedElseWhere"];
+                //newVehicle.GaragingAddress2 = collection["Vehicle.GaragedElseWhere"];
+                //newVehicle.GaragingCity = collection["Vehicle.GaragedElseWhere"];
+                //newVehicle.GaragingState = collection["Vehicle.GaragedElseWhere"];
+                //newVehicle.GaragingZipCode = collection["Vehicle.GaragedElseWhere"];
+                //}
+                //else
+                //{
+                newVehicle.GaragingAddress1 = quote.AddressLine1;
+                newVehicle.GaragingAddress2 = quote.AddressLine2;
+                newVehicle.GaragingCity = quote.City;
+                newVehicle.GaragingState = quote.State;
+                newVehicle.GaragingZipCode = quote.ZipCode;
+                //}
+
+                newVehicle.MilesToWorkSchool = collection["Vehicle.MilesToWorkSchool"];
+                newVehicle.AnnualMileage = collection["Vehicle.AnnualMileage"];
+                newVehicle.FarmUse = Convert.ToBoolean(collection["Vehicle.FarmUse"]);
+
+                Titled titled;
+                Enum.TryParse(collection["Vehicle.Titled"], out titled);
+
+                VehicleUsuage usage;
+                Enum.TryParse(collection["Vehicle.usage"], out usage);
+
+                newVehicle.Titled = titled;
+                newVehicle.Usage = usage;
+                newVehicle.QuoteId = quoteId;
+
+                _ctx.Vehicles.AddVehicle(newVehicle);
+
+                var quoteVehicles = _ctx.Vehicles.GetAllVehicles();
+                createQuoteModel.Vehicles.Add(newVehicle);
+                #endregion
+
+                if (submitform == "Add")
+                {
+                    //go back to vehicle page                
+                    return RedirectToAction("CreateVehicles", createQuoteModel);
+                }
+                else
+                {
+                    createQuoteModel.Quote = _ctx.Quotes.GetQuoteById(quoteId);
+                    createQuoteModel.Quote.VehiclePageValid = true;
+                    _ctx.Quotes.Update(createQuoteModel.Quote);
+                    return RedirectToAction("CreateDrivers", createQuoteModel);
+                }
+                _ctx.Quotes.Update(quote);
+
+
+                return Json(quote.QuoteId, JsonRequestBehavior.AllowGet);
+
+            }
+            catch
+            {
+                return Json(-1, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
 
         [HttpPost]
         public JsonResult UpdateVehicleCoverage(string vId, string comp, string rental, string roadside, string gap)

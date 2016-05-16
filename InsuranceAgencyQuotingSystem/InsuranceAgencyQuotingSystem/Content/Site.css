@@ -65,3 +65,86 @@ tr.spaceUnder > td {
     padding-top: 0 !important;
     margin: 0 !important;
 }
+
+
+.buttonSave {
+  border-radius: 4px;
+  background-color: #002bff;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 18px;
+  padding: 20px;
+  width: 150px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.buttonSave span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.buttonSave span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.buttonSave:hover span {
+  padding-right: 25px;
+}
+
+.buttonSave:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+.buttonExit {
+  border-radius: 4px;
+  background-color: #ff0000;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 18px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.buttonExit span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.buttonExit span:after {
+  content: '«';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.buttonExit:hover span {
+  padding-right: 25px;
+}
+
+.buttonExit:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+/*.spinner { position: absolute; right: 5px; top: 6px; width: 25px; height: 25px; }*/

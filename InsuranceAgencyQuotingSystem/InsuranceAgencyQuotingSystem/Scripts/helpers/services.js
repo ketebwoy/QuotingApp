@@ -5,6 +5,10 @@ var modelDetails = {};
 
 var states = [
     {
+        "name": "Please Select s State",
+        "abbreviation": "-1"
+    },
+    {
         "name": "Alabama",
         "abbreviation": "AL"
     },
@@ -243,6 +247,11 @@ var states = [
 ];
 var educationlevels = [
     {
+        "text": "Please Select education level",
+        "label": "please-select-education",
+        "id": "-1"
+    },
+    {
         "text": "No formal education",
         "label": "no-formal-education",
         "id": "1"
@@ -276,8 +285,9 @@ var educationlevels = [
 
 var vehicleYears = document.getElementById('Vehicle.Year');
 if (vehicleYears != null)
-    {
-    for (i = new Date().getFullYear() + 1 ; i > 1900; i--) {
+{
+    vehicleYears.add(new Option("Select a State", -1));
+    for (i = new Date().getFullYear(); i > 1900; i--) {
         vehicleYears.add(new Option(i));
     }
 }
@@ -331,6 +341,7 @@ var getVehicleMakes = (function () {
             var makesModelsJson = JSON.parse(req.responseText);
             var makedd = document.getElementById('Vehicle.Make');
             makedd.options.length = 0;
+            makedd.add(new Option("Please Select a Make", "-1"));
             for (i = 0; i < makesModelsJson.makes.length; i++) {
                 
                 makedd.add(new Option(makesModelsJson.makes[i].name, makesModelsJson.makes[i].name));
@@ -347,10 +358,10 @@ var getVehicleModels = (function () {
     var make = document.getElementById('Vehicle.Make').value;
     var modeldd = document.getElementById('Vehicle.Model');
     modeldd.options.length = 0;
-   
+    modeldd.add(new Option("Please Select a Model", "-1"));
     for (i = 0; i < makesModelsJsonGlobal.makes.length; i++)
     {
-        if(makesModelsJsonGlobal.makes[i].id == make)
+        if(makesModelsJsonGlobal.makes[i].name == make)
         {
             var models = makesModelsJsonGlobal.makes[i].models; 
             for (z = 0; z < models.length; z++)
@@ -388,6 +399,7 @@ var getVehicleModelDetails = (function () {
             modelDetails = details; 
             var detaildd = document.getElementById('Vehicle.Detail');
             detaildd.options.length = 0;
+            detaildd.add(new Option("New Select a detail option", "-1"));
             for (i = 0; i < details.styles.length; i++) {
                 detaildd.add(new Option("Style: " + details.styles[i].name + "  VIN: " + details.styles[i].squishVins[0], details.styles[i].name));
             }
@@ -404,7 +416,7 @@ var getWheels = (function () {
 
     for(i = 0; i < modelDetails.styles.length; i++)
     {
-        if (modelDetails.styles[i].id == detailSelection.value)
+        if (modelDetails.styles[i].name == detailSelection.value)
         {
             cost.value = modelDetails.styles[i].price.baseMSRP;
             wheels.value = modelDetails.styles[i].drivenWheels;
@@ -451,4 +463,86 @@ var SubmitCoverage = function () {
     
  
 };
+
+var SaveandExit = function () {
+    //save quote info
+};
+
+var CreateCustomer = function () {
+
+
+    var firstName = document.getElementById('Applicant_FirstName').value;
+    var midI = document.getElementById('Applicant_MI').value;
+    var lastName = document.getElementById('Applicant_LastName').value;
+    var dtob = document.getElementById('Applicant_DOB').value;
+    var phone = document.getElementById('Applicant_PhoneNumber').value;
+    var cell = document.getElementById('Applicant_CellNumber').value;
+    var emailAddress = document.getElementById('Applicant_EmailAddress').value;
+
+
+    var request = $.ajax({
+        type: 'POST',
+        url: '/Quote/CreateCustomerAjax',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({ fn: firstName, mi:midI, ln: lastName, dob: dtob, pn: phone, cn: cell, email: emailAddress}), //hard-coded value used for simplicity
+        dataType: 'json'
+    });
+
+    request.done(function (msg) {
+        var test = msg;
+        if(msg > 0)
+        {
+            window.location = "http://localhost:50317/Quote/CreatePolicy?qId=" + msg;
+        }
+
+    });
+
+    request.fail(function (jqXHR, textStatus, errorThrown) {
+        var test = errorThrown;
+    });
+
+
+};
+
+var CreatePolicy = function () {
+
+    var qId = document.getElementById('Quote_QuoteId').value;
+    var add1 = document.getElementById('Quote_AddressLine1').value;
+    var add2 = document.getElementById('Quote_AddressLine2').value;
+    var cit = document.getElementById('Quote_City').value;
+    var sta = document.getElementById('Quote.State').value;
+    var zipc = document.getElementById('Quote_ZipCode').value;
+    var years = document.getElementById('Quote_YearsAtAddress').value;    
+    var numres = document.getElementById('Quote_NumResidentsinHouehold').value;
+    var otveh = document.getElementById('Quote_OtherVehiclesInHouseHold').value;
+    var mcins = document.getElementById('Quote_MonthsWithCurrentInsurance').value;
+    var picomp = document.getElementById('Quote_PriorInsuranceCompany').value;
+    var picompf = document.getElementById('Quote_PriorInsuranceCompanyFlag').value;
+
+
+
+    var request = $.ajax({
+        type: 'POST',
+        url: '/Quote/CreatePolicyAjax',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({ qid: qId, a1: add1, a2: add2, ct: cit, st: sta, zip: zipc, yrs: years, numr: numres, otv: otveh, mci: mcins, pi: picomp, pif: picompf }), //hard-coded value used for simplicity
+        dataType: 'json'
+    });
+
+    request.done(function (msg) {
+        var test = msg;
+        if (msg > 0) {
+            window.location = "http://localhost:50317/Quote/CreateVehicles?qId=" + msg;
+        }
+
+    });
+
+    request.fail(function (jqXHR, textStatus, errorThrown) {
+        var test = errorThrown;
+    });
+
+
+};
+
+
 

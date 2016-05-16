@@ -55,21 +55,6 @@
             </tr>
             <tr>
                 <td>
-                    @if (Model.Quote.DriverPageValid)
-                    {
-                        <span class="glyphicon glyphicon-check" style="color:green"></span>
-                    }
-                    else
-                    {
-                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
-                    }
-                </td>
-                <td>
-                    <a href="#">Driver Page</a>
-                </td>
-            </tr>
-            <tr>
-                <td>
                     @if (Model.Quote.VehiclePageValid)
                     {
                         <span class="glyphicon glyphicon-check" style="color:green"></span>
@@ -83,6 +68,23 @@
                     <a href="#">Vehicle Page</a>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    @if (Model.Quote.DriverPageValid)
+                    {
+                        <span class="glyphicon glyphicon-check" style="color:green"></span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+                    }
+                </td>
+                <td>
+                    <a href="#">Driver Page</a>
+                </td>
+            </tr>
+
+
             <tr>
                 <td>
                     @if (Model.Quote.CoveragePageValid)
@@ -278,10 +280,15 @@
 
 
                                 <div class="row">
-                                    <br>
-                                    <input type="button" id="cancel" class="btn btn-info" value="Cancel">
-                                    <input type="submit" id="submit" class="btn btn-info" value="Next  Button">
+                                    <br><button type="button" class="buttonExit" id="submitform" onclick="SaveandExit();">
+    <span>Save and Exit</span>
 
+</button>
+                                    <button type="button" class="buttonSave" id="submitform" onclick="CreatePolicy();">
+                                        <span>Next</span>
+                                       
+                                    </button>
+                                   
                                 </div>
                             </center>
             </form>
